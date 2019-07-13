@@ -3,8 +3,10 @@ package main
 import (
 	"context"
 	"encoding/json"
+	"fmt"
 	"log"
 	"net/http"
+	"os"
 	"time"
 
 	bson "github.com/globalsign/mgo/bson"
@@ -28,8 +30,10 @@ func main() {
 	log.Println("Go-mongo is running ...")
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 	defer cancel()
-
-	conn := options.Client().ApplyURI("mongodb://localhost:27017")
+	host := os.Getenv("host")
+	port := os.Getenv("port")
+	connect := fmt.Sprintf("mongodb://%s:%s", host, port)
+	conn := options.Client().ApplyURI(connect)
 	db, err := mongo.Connect(ctx, conn)
 	utils.FindErrors(err, "DB is not connect ")
 	client = db
@@ -39,7 +43,6 @@ func main() {
 	router.HandleFunc("/student/{id}", GetStudent).Methods(http.MethodGet)
 	router.HandleFunc("/student/{id}/update", UpdateStudent).Methods(http.MethodPost)
 	router.HandleFunc("/student/{id}", DeleteStudent).Methods(http.MethodDelete)
-
 	http.ListenAndServe("127.0.0.1:8000", router)
 }
 
