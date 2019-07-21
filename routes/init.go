@@ -1,6 +1,9 @@
 package routes
 
 import (
+	"net/http"
+	"time"
+
 	"github.com/labstack/echo"
 	"github.com/local/go-mongo/models"
 )
@@ -13,5 +16,11 @@ func Route() {
 	api.GET("/student/:id", models.GetStudent)
 	api.POST("/student/:id/update", models.UpdateStudent)
 	api.DELETE("/student/:id", models.DeleteStudent)
-	e.Start(":8000")
+	s := &http.Server{
+		Addr:         ":8000",
+		ReadTimeout:  20 * time.Minute,
+		WriteTimeout: 20 * time.Minute,
+	}
+
+	e.Logger.Fatal(e.StartServer(s))
 }
