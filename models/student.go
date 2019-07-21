@@ -13,11 +13,13 @@ import (
 	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
+const table = "student"
+
 func CreateStudent(c echo.Context) error {
 	var stud utils.Student
 	err := json.NewDecoder(c.Request().Body).Decode(&stud)
 	utils.FindErrors(err, "Error Decode")
-	collection := DB.Database("go-mongo").Collection("student")
+	collection := DB.Database("go-mongo").Collection(table)
 	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 	defer cancel()
 	result, err := collection.InsertOne(ctx, stud)
@@ -28,7 +30,7 @@ func CreateStudent(c echo.Context) error {
 
 func GetStudents(c echo.Context) error {
 	var students []utils.Student
-	collection := DB.Database("go-mongo").Collection("student")
+	collection := DB.Database("go-mongo").Collection(table)
 	ctx, cancel := context.WithTimeout(context.Background(), 20*time.Second)
 	defer cancel()
 	cursor, err := collection.Find(ctx, bson.M{})
@@ -56,7 +58,7 @@ func GetStudent(c echo.Context) error {
 	var student []utils.Student
 	var stud utils.Student
 
-	collection := DB.Database("go-mongo").Collection("student")
+	collection := DB.Database("go-mongo").Collection(table)
 	ctx, cancel := context.WithTimeout(context.Background(), 20*time.Second)
 	defer cancel()
 
@@ -79,7 +81,7 @@ func UpdateStudent(c echo.Context) error {
 
 	err = json.NewDecoder(c.Request().Body).Decode(&student)
 	update := bson.M{"$set": student}
-	collection := DB.Database("go-mongo").Collection("student")
+	collection := DB.Database("go-mongo").Collection(table)
 	ctx, cancel := context.WithTimeout(context.Background(), 20*time.Second)
 	defer cancel()
 
@@ -96,7 +98,7 @@ func DeleteStudent(c echo.Context) error {
 	id, err := primitive.ObjectIDFromHex(params)
 	utils.FindErrors(err, "Error Read Params")
 
-	collection := DB.Database("go-mongo").Collection("student")
+	collection := DB.Database("go-mongo").Collection(table)
 	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 	defer cancel()
 

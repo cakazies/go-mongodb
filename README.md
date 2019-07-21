@@ -1,6 +1,6 @@
 ### GO-POSTGRESQL
 Golang RESTFUL API with Database MongoDB (NOSQL)
-and with ECHO framework 
+and with ECHO framework, validate 
 
 How to run
 #### FYI
