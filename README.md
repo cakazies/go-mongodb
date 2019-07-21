@@ -1,5 +1,6 @@
 ### GO-POSTGRESQL
 Golang RESTFUL API with Database MongoDB (NOSQL)
+and with ECHO framework 
 
 How to run
 #### FYI
@@ -7,7 +8,7 @@ How to run
 dont forget for `go get`
 - `go get github.com/globalsign/mgo/bson`
 - `go get go.mongodb.org/mongo-driver/bson`
-- `go get github.com/gorilla/mux`
+- `go get github.com/labstack/echo`
 - `go get go.mongodb.org/mongo-driver/mongo`
 
 #### Run Local
