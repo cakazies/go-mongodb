@@ -1,2 +1,5 @@
 .env
 
+/config/config.toml
+
+/vendor

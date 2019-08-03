@@ -18,12 +18,12 @@ const table = "student"
 func CreateStudent(c echo.Context) error {
 	var stud utils.Student
 	err := json.NewDecoder(c.Request().Body).Decode(&stud)
-	utils.FindErrors(err, "Error Decode")
+	utils.LogError(err, "Error Decode data json")
 	collection := DB.Database("go-mongo").Collection(table)
 	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 	defer cancel()
 	result, err := collection.InsertOne(ctx, stud)
-	utils.FindErrors(err, "Insert Student Error")
+	utils.LogError(err, "Insert Student Error")
 	i := result.InsertedID
 	return c.JSON(http.StatusOK, utils.Resp(nil, fmt.Sprintf("Insert Success with %s", i)))
 }
@@ -53,7 +53,7 @@ func GetStudents(c echo.Context) error {
 func GetStudent(c echo.Context) error {
 	params := c.Param("id")
 	id, err := primitive.ObjectIDFromHex(params)
-	utils.FindErrors(err, "Error Decode")
+	utils.LogError(err, "Error Get ID Data")
 
 	var student []utils.Student
 	var stud utils.Student
@@ -76,7 +76,7 @@ func GetStudent(c echo.Context) error {
 func UpdateStudent(c echo.Context) error {
 	params := c.Param("id")
 	id, err := primitive.ObjectIDFromHex(params)
-	utils.FindErrors(err, "Error Decode")
+	utils.LogError(err, "Error Get id Data")
 	var student utils.Student
 
 	err = json.NewDecoder(c.Request().Body).Decode(&student)
@@ -96,7 +96,7 @@ func UpdateStudent(c echo.Context) error {
 func DeleteStudent(c echo.Context) error {
 	params := c.Param("id")
 	id, err := primitive.ObjectIDFromHex(params)
-	utils.FindErrors(err, "Error Read Params")
+	utils.LogError(err, "Error Read Params")
 
 	collection := DB.Database("go-mongo").Collection(table)
 	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
