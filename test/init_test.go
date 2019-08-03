@@ -1,32 +1,46 @@
 package test
 
 import (
-	"log"
+	"encoding/json"
 	"net/http"
 	"net/http/httptest"
 	"testing"
 
 	"github.com/labstack/echo"
-
 	"github.com/local/go-mongo/models"
+	"github.com/local/testify/assert"
 )
 
-type testCase struct {
-	name         string
-	input        string
-	expectedData string
-	expectedCode int
-	path         string
-	handler      func(echo.Context) error
-	query        string
-}
+type (
+	testCase struct {
+		name         string
+		input        string
+		expectedData string
+		expectedCode int
+		path         string
+		handler      func(echo.Context) error
+		query        string
+	}
+	Response struct {
+		Response Rest                   `json:"response"`
+		Data     map[string]interface{} `json:"data,omitempty"`
+	}
+	Rest struct {
+		Message string `json:"message,omitempty"`
+		Code    string `json:"code,omitempty"`
+	}
+)
+
+var (
+	userJSON = `{"name":"Jon Snow","email":"jon@labstack.com"}`
+)
 
 func TestGetRoom(t *testing.T) {
 	tasks := []testCase{
 		{
 			name:         "Testing with student id",
-			input:        "5d33185d5dbd1d1f0c4f5d3a",
-			expectedData: "5d33185d5dbd1d1f0c4f5d3a",
+			input:        "5d283a781ce2e869fcf97d8b",
+			expectedData: "5d283a781ce2e869fcf97d8b",
 			expectedCode: http.StatusOK,
 			path:         "api/student",
 			handler:      models.GetStudent,
@@ -54,18 +68,17 @@ func TestGetRoom(t *testing.T) {
 			c.SetPath("/api/student/:id")
 			c.SetParamNames("id")
 			c.SetParamValues(tc.input)
-			log.Println(rec.Body.String())
 			// Assertions
-			// if assert.NoError(t, models.GetStudent) {
-			// 	assert.Equal(t, http.StatusOK, rec.Code)
-			// 	assert.Equal(t, userJSON, rec.Body.String())
-			// }
+			if assert.NoError(t, models.GetStudent(c)) {
+				assert.Equal(t, http.StatusOK, rec.Code)
+				assert.Equal(t, userJSON, rec.Body.String())
+			}
 
-			// buf := resp.Body.Bytes()
-			// var respData Response
-			// if err := json.Unmarshal(buf, &respData); err != nil {
-			// 	t.Error("Can not parsing response testing. Error :", err)
-			// }
+			buf := rec.Body.Bytes()
+			var respData Response
+			if err := json.Unmarshal(buf, &respData); err != nil {
+				t.Error("Can not parsing response testing. Error :", err)
+			}
 			// getData := fmt.Sprintf("%v", respData.Data["rm_id"])
 			// assert.Equal(t, getData, tc.expectedData, "Expedted Data is Wrong")
 		})

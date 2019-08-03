@@ -16,6 +16,7 @@ func Route() {
 	api.GET("/student/:id", models.GetStudent)
 	api.POST("/student/:id/update", models.UpdateStudent)
 	api.DELETE("/student/:id", models.DeleteStudent)
+
 	s := &http.Server{
 		Addr:         ":8000",
 		ReadTimeout:  20 * time.Minute,
