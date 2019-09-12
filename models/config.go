@@ -18,7 +18,7 @@ var (
 )
 
 func init() {
-	initViper()
+	InitViper()
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 	defer cancel()
 	host := viper.GetString("configDB.host")
@@ -30,7 +30,7 @@ func init() {
 	DB = db
 }
 
-func initViper() {
+func InitViper() {
 	viper.SetConfigFile("toml")
 	if cfgFile != "" {
 		viper.SetConfigFile(cfgFile)

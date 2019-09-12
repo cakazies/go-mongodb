@@ -1,5 +1,5 @@
 .env
 
-/config/config.toml
+./config/config.toml
 
-/vendor
+./vendor
