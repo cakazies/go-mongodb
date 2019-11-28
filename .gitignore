@@ -1,5 +1,17 @@
+# Binaries for programs and plugins
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
 .env
 
-./config/config.toml
+# Ignore connection local
+vendor/
 
-./vendor
+# configs file 
+configs/config.toml
+
+# log file 
+utils/logfile.log
+
