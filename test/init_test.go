@@ -2,13 +2,21 @@ package test
 
 import (
 	"encoding/json"
+	"fmt"
+	"log"
 	"net/http"
 	"net/http/httptest"
 	"testing"
 
 	"github.com/labstack/echo"
 	"github.com/local/go-mongo/models"
+	"github.com/local/go-mongo/utils"
 	"github.com/local/testify/assert"
+	"github.com/spf13/viper"
+)
+
+var (
+	cfgFile string
 )
 
 type (
@@ -35,6 +43,9 @@ var (
 	userJSON = `{"name":"Jon Snow","email":"jon@labstack.com"}`
 )
 
+func init() {
+	initViper()
+}
 func TestGetRoom(t *testing.T) {
 	tasks := []testCase{
 		{
@@ -58,9 +69,8 @@ func TestGetRoom(t *testing.T) {
 	}
 
 	for _, tc := range tasks {
+		fmt.Println(tc)
 		t.Run(tc.name, func(t *testing.T) {
-			// url := fmt.Sprintf("http://%s/%s/%s", "127.0.0.1:8000", tc.path, tc.input)
-			// url := fmt.Sprintf("/%s/%s", tc.path, tc.input)
 			e := echo.New()
 			req := httptest.NewRequest(http.MethodGet, "/", nil)
 			rec := httptest.NewRecorder()
@@ -79,8 +89,24 @@ func TestGetRoom(t *testing.T) {
 			if err := json.Unmarshal(buf, &respData); err != nil {
 				t.Error("Can not parsing response testing. Error :", err)
 			}
-			// getData := fmt.Sprintf("%v", respData.Data["rm_id"])
-			// assert.Equal(t, getData, tc.expectedData, "Expedted Data is Wrong")
+			getData := fmt.Sprintf("%v", respData.Data["rm_id"])
+			assert.Equal(t, getData, tc.expectedData, "Expedted Data is Wrong")
+
 		})
 	}
+}
+
+func initViper() {
+	viper.SetConfigFile("toml")
+	if cfgFile != "" {
+		viper.SetConfigFile(cfgFile)
+	} else {
+		viper.AddConfigPath("./../configs")
+		viper.SetConfigName("config")
+	}
+	viper.AutomaticEnv()
+
+	err := viper.ReadInConfig()
+	utils.FailError(err, "Error Viper config")
+	log.Println("Using Config File: ", viper.ConfigFileUsed())
 }

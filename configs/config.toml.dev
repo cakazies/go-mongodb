@@ -1,0 +1,16 @@
+[app]
+    host            = "127.0.0.1:8000"
+
+[configDB]
+    host            = ""
+    port            = 27017
+    user            = ""
+    password        = ""
+    dbname          = ""
+
+[api]
+    secret_key      = ""
+
+[expired]
+    hours           = "0"
+    minutes         = "10"

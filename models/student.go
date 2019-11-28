@@ -15,6 +15,7 @@ import (
 
 const table = "student"
 
+// CreateStudent function for insert data in table student
 func CreateStudent(c echo.Context) error {
 	var stud utils.Student
 	err := json.NewDecoder(c.Request().Body).Decode(&stud)
@@ -28,6 +29,7 @@ func CreateStudent(c echo.Context) error {
 	return c.JSON(http.StatusOK, utils.Resp(nil, fmt.Sprintf("Insert Success with %s", i)))
 }
 
+// GetStudents for get data student
 func GetStudents(c echo.Context) error {
 	var students []utils.Student
 	collection := DB.Database("go-mongo").Collection(table)
@@ -50,6 +52,7 @@ func GetStudents(c echo.Context) error {
 	return c.JSON(http.StatusOK, utils.Resp(students, "Request Success"))
 }
 
+// GetStudent function for get sata single student
 func GetStudent(c echo.Context) error {
 	params := c.Param("id")
 	id, err := primitive.ObjectIDFromHex(params)
@@ -73,6 +76,7 @@ func GetStudent(c echo.Context) error {
 	return c.JSON(http.StatusOK, utils.Resp(student, "Request Success"))
 }
 
+// UpdateStudent function for update data student
 func UpdateStudent(c echo.Context) error {
 	params := c.Param("id")
 	id, err := primitive.ObjectIDFromHex(params)
@@ -93,6 +97,7 @@ func UpdateStudent(c echo.Context) error {
 	return c.JSON(http.StatusOK, utils.Resp(nil, fmt.Sprintf("Update Success with : %s", i)))
 }
 
+// DeleteStudent function for delete permanent data student
 func DeleteStudent(c echo.Context) error {
 	params := c.Param("id")
 	id, err := primitive.ObjectIDFromHex(params)
