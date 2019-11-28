@@ -7,10 +7,3 @@
     user            = ""
     password        = ""
     dbname          = ""
-
-[api]
-    secret_key      = ""
-
-[expired]
-    hours           = "0"
-    minutes         = "10"
