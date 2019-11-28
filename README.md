@@ -1,4 +1,4 @@
-# GO-POSTGRESQL
+# GO-MONGODB
 Golang RESTFUL API with Database MongoDB (NOSQL)
 and with ECHO framework, validate
 

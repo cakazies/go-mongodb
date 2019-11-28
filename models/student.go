@@ -66,6 +66,7 @@ func GetStudent(c echo.Context) error {
 	defer cancel()
 
 	err = collection.FindOne(ctx, utils.Student{ID: id}).Decode(&stud)
+
 	student = append(student, stud)
 	if err != nil {
 		if err.Error() == "mongo: no documents in result" {
