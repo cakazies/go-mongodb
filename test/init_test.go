@@ -9,9 +9,9 @@ import (
 	"testing"
 
 	"github.com/labstack/echo"
-	"github.com/local/go-mongo/models"
-	"github.com/local/go-mongo/utils"
-	"github.com/local/testify/assert"
+	"github.com/cakazies/go-mongodb/models"
+	"github.com/cakazies/go-mongodb/utils"
+	"github.com/stretchr/testify/assert"
 	"github.com/spf13/viper"
 )
 

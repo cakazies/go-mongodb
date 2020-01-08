@@ -1,7 +1,7 @@
 package main
 
 import (
-	"github.com/local/go-mongo/routes"
+	"github.com/cakazies/go-mongodb/routes"
 )
 
 func main() {

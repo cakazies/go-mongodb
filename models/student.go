@@ -9,7 +9,7 @@ import (
 
 	"github.com/globalsign/mgo/bson"
 	"github.com/labstack/echo"
-	"github.com/local/go-mongo/utils"
+	"github.com/cakazies/go-mongodb/utils"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 

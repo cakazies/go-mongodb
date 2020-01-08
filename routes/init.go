@@ -5,7 +5,7 @@ import (
 	"time"
 
 	"github.com/labstack/echo"
-	"github.com/local/go-mongo/models"
+	"github.com/cakazies/go-mongodb/models"
 	"github.com/spf13/viper"
 )
 

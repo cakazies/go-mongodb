@@ -6,7 +6,7 @@ import (
 	"log"
 	"time"
 
-	"github.com/local/go-mongo/utils"
+	"github.com/cakazies/go-mongodb/utils"
 	"github.com/spf13/viper"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"

@@ -10,7 +10,7 @@
 vendor/
 
 # configs file 
-configs/config.toml
+./configs/config.toml
 
 # log file 
 utils/logfile.log
