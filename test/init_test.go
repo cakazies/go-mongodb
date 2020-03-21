@@ -8,11 +8,11 @@ import (
 	"net/http/httptest"
 	"testing"
 
-	"github.com/labstack/echo"
 	"github.com/cakazies/go-mongodb/models"
 	"github.com/cakazies/go-mongodb/utils"
-	"github.com/stretchr/testify/assert"
+	"github.com/labstack/echo"
 	"github.com/spf13/viper"
+	"github.com/stretchr/testify/assert"
 )
 
 var (
